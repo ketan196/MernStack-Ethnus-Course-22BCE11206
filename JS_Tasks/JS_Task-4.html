@@ -1,24 +1,66 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS-TASK-4</title>
+    <title>Colorful Date & Time Display</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
 </head>
-<body style="margin-top: 10%; margin-left: 40%;">
-    <button class="d1">show date</button>
-    <p class="show-date"></p>
-    <button class="d2">show Time</button>
-    <p class="show-time"></p>
+<body class="bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white bg-opacity-90 backdrop-filter backdrop-blur-lg rounded-xl shadow-2xl p-8 max-w-md w-full border-t border-l border-white border-opacity-30">
+        <h1 class="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-8">Date & Time Display</h1>
+        
+        <div class="mb-8">
+            <button class="d1 w-full bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 text-white font-medium py-3 px-4 rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                Show Date
+            </button>
+            <div class="mt-4 p-3 bg-green-100 rounded-lg">
+                <p class="show-date text-center text-lg font-medium text-green-800 h-8"></p>
+            </div>
+        </div>
+        
+        <div>
+            <button class="d2 w-full bg-gradient-to-r from-blue-400 to-indigo-500 hover:from-blue-500 hover:to-indigo-600 text-white font-medium py-3 px-4 rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                Show Time
+            </button>
+            <div class="mt-4 p-3 bg-blue-100 rounded-lg">
+                <p class="show-time text-center text-lg font-medium text-blue-800 h-8"></p>
+            </div>
+        </div>
+        
+<!--         <div class="mt-8 text-center">
+            <p class="text-xs text-gray-500">Made with <span class="text-red-500">❤</span> using Tailwind CSS</p>
+        </div> -->
+    </div>
+    
     <script>
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        
         document.querySelector(".d2").addEventListener("click", function(){
             let d = new Date();
-            document.querySelector(".show-time").innerHTML = d;
+            let hours = d.getHours();
+            let minutes = d.getMinutes();
+            let seconds = d.getSeconds();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            let timeElement = document.querySelector(".show-time");
+            timeElement.innerHTML = `${hours}:${minutes}:${seconds} ${ampm}`;
+            timeElement.classList.add("animate-pulse");
+            setTimeout(() => timeElement.classList.remove("animate-pulse"), 1000);
         });
+        
         document.querySelector(".d1").addEventListener("click", function(){
             let d = new Date();
-            document.querySelector(".show-date").innerHTML = d.getDate() + "/" + months[d.getMonth()] + "/" + d.getFullYear();
+            let dateElement = document.querySelector(".show-date");
+            dateElement.innerHTML = `${d.getDate()} ${months[d.getMonth()]}, ${d.getFullYear()}`;
+            dateElement.classList.add("animate-pulse");
+            setTimeout(() => dateElement.classList.remove("animate-pulse"), 1000);
         });
     </script>
 </body>
